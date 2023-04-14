@@ -21,11 +21,17 @@ export const Login = () => {
         mode: 'OnChange'
     });
 
-    const onSubmit = (values) => {
-        dispatch(fetchAuth(values));
+    const onSubmit = async (values) => {
+        const data = await dispatch(fetchAuth(values));
+        if (!data.payload) {
+            alert('не удалось авторизоваться')
+        }
+        if ('token' in data.payload) {
+            window.localStorage.setItem('token', data.payload.token);
+        } else {
+            alert('не удалось авторизоваться')
+        }
     };
-
-    console.log('auth', isAuth);
 
     if (isAuth) {
         return <Navigate to="/" />
@@ -43,7 +49,7 @@ export const Login = () => {
                     error = {Boolean(errors.email?.message)}
                     helperText={errors.email?.message}
                     fullWidth
-                    type='email'
+                    type="email"
                     {... register('email', {required: 'укажите почту'})}
                 />
                 <TextField
@@ -52,9 +58,10 @@ export const Login = () => {
                     fullWidth
                     error = {Boolean(errors.password?.message)}
                     helperText={errors.password?.message}
+                    type="password"
                     {... register('password', {required: 'укажите  pass'})}
                 />
-                <Button type="submit" size="large" variant="contained" fullWidth>
+                <Button disabled={!isValid} type="submit" size="large" variant="contained" fullWidth>
                     Войти
                 </Button>
 
