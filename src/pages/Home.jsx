@@ -11,7 +11,7 @@ import {fetchPost, fetchTags} from "../redux/slices/post";
 
 export const Home = () => {
     const dispatch = useDispatch();
-    const { posts, tags} = useSelector(state=> state.posts);
+    const { posts, tags } = useSelector(state=> state.posts);
     const userData = useSelector(state => state.auth.data);
 
     const isPostsLoading = posts.status;
