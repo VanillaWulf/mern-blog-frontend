@@ -33,7 +33,7 @@ export const FullPost = () => {
           <Post
             id={data._id}
             title={data.title}
-            imageUrl={`http://localhost:4444${data.imgUrl}`}
+            imageUrl={data.imgUrl? `http://localhost:4444${data.imgUrl}`: ''}
             user={data.user}
             createdAt={data.createAt}
             viewsCount={data.viewCount}
